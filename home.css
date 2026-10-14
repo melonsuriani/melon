@@ -1,0 +1,435 @@
+/* ============================================
+   COVER — fixed full-bleed image screen w/ CTA
+   ============================================ */
+.cover {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);   /* never see-through, even if a photo fails to load */
+  height: 100vh;
+  overflow: hidden;
+  z-index: 100;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+body.entered .cover {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+html.skip-cover .cover {
+  display: none;
+}
+
+html.skip-cover body {
+  overflow: auto;
+}
+
+body:not(.entered) {
+  overflow: hidden;
+}
+
+.cover-media {
+  color: transparent;   /* hide the broken-image description if a photo ever fails */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(22,21,27,0.1) 0%, rgba(22,21,27,0.45) 100%);
+}
+
+.cover-cta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 2;
+  font-family: var(--serif-alt);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(18px, 2.6vw, 26px);
+  color: #fff;
+  text-align: center;
+  padding: 18px 32px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  max-width: 80vw;
+  line-height: 1.3;
+  transition: transform 0.25s ease;
+}
+
+.cover-cta:hover,
+.cover-cta:focus-visible {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.cover-cta-cursor {
+  display: inline-block;
+  width: 0.04em;
+  height: 0.95em;
+  margin-left: 0.15em;
+  background: currentColor;
+  vertical-align: -0.12em;
+  animation: cursor-blink 1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Phone: its own vertical cover photo (images/cover-mobile.jpg, set in index.html), centered */
+@media (max-width: 720px) {
+  .cover-media { object-position: 50% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-cta-cursor { animation: none; opacity: 1; }
+}
+
+/* ============================================
+   HUB — scattered scrapbook-style link layout
+   ============================================ */
+.hub {
+  position: relative;
+  scroll-margin-top: 73px;   /* land just below the sticky header */
+  min-height: 92vh;
+  padding-top: clamp(40px, 8vh, 96px);
+  padding-bottom: 40px;
+}
+
+.scroll-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(16px, 3vh, 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--stone);
+  text-decoration: none;
+  font-family: var(--sans);
+}
+
+.scroll-hint-label {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 15px;
+}
+
+.scroll-hint-arrow {
+  font-size: 16px;
+  line-height: 1;
+  animation: scroll-hint-bounce 1.8s ease-in-out infinite;
+}
+
+.scroll-hint:hover .scroll-hint-label,
+.scroll-hint:focus-visible .scroll-hint-label {
+  text-decoration: underline;
+}
+
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-arrow { animation: none; }
+}
+
+.hub-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.hub-link {
+  display: block;
+  width: fit-content;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.hub-link:hover,
+.hub-link:focus-visible { color: var(--accent); }
+
+.hub-link.design {
+  font-family: var(--serif-alt);
+  font-weight: 400;
+  font-size: clamp(30px, 5.2vw, 58px);
+  text-decoration-thickness: 2px;
+  line-height: 1;
+  margin-left: 4%;
+  margin-top: 0;
+}
+
+.hub-link.photo {
+  font-family: "Pinyon Script", var(--serif);   /* Google Fonts, loaded in index.html */
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(30px, 4.6vw, 50px);
+  text-decoration-thickness: 1px;
+  margin-left: 30%;
+  margin-top: clamp(4px, 0.8vw, 10px);
+}
+
+.hub-link.styling {
+  font-family: "Arimo", "Liberation Sans", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(34px, 5.8vw, 64px);
+  text-decoration-thickness: 2px;
+  line-height: 1;
+  margin-left: 12%;
+  margin-top: clamp(10px, 1.8vw, 18px);
+}
+
+.hub-link.about {
+  font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.6vw, 18px);
+  text-decoration-thickness: 1px;
+  margin-left: 10%;
+  margin-top: 0;
+}
+
+.hub-link.touch {
+  font-family: var(--serif-alt);
+  font-weight: 400;
+  font-size: clamp(17px, 2.2vw, 26px);
+  text-decoration-thickness: 1px;
+  margin-left: 6%;
+  margin-top: clamp(8px, 1.4vw, 14px);
+}
+
+/* Laptop/desktop: words placed to match Melina's layout mock.
+   Everything is sized off --hw (page width, capped at 1400px) so the
+   arrangement keeps its proportions on any laptop screen. */
+@media (min-width: 721px) {
+  .hub { --hw: min(100vw, 1400px); }
+  .hub-links {
+    position: relative;
+    height: calc(var(--hw) * 0.37);
+  }
+  .hub-links .hub-link {
+    position: absolute;
+    margin: 0;
+    padding: 0;          /* the About page's .about section styles shouldn't reach this link */
+    line-height: 1;
+  }
+  .hub-link.design  { left: 3.2%;  top: 0;                          font-size: calc(var(--hw) * 0.0463); }
+  .hub-link.photo   { left: 25.4%; top: calc(var(--hw) * 0.0364);   font-size: calc(var(--hw) * 0.0402); }
+  .hub-link.styling { left: 10.4%; top: calc(var(--hw) * 0.1529);   font-size: calc(var(--hw) * 0.0472); }
+  .hub-link.about   { left: 19%;   top: calc(var(--hw) * 0.2409);   font-size: calc(var(--hw) * 0.0235); }
+  .hub-link.touch   { left: 3.5%;  top: calc(var(--hw) * 0.3224);   font-size: calc(var(--hw) * 0.0232); }
+}
+
+@media (max-width: 720px) {
+  /* Hub fills the whole phone screen under the header; the links spread
+     top to bottom and "Selected work" sits just below the fold */
+  .hub {
+    min-height: calc(100vh - 72px);
+    min-height: calc(100svh - 72px);
+    display: flex;
+    flex-direction: column;
+    padding-top: clamp(28px, 5vh, 48px);
+    padding-bottom: 88px;
+  }
+  .hub-links {
+    flex: 1;
+    justify-content: space-evenly;
+  }
+  .hub-links .hub-link { margin-top: 0; }
+  .hub-link.design { font-size: clamp(38px, 13vw, 52px); margin-left: 0; }
+  /* "p" ends right at the end of "styling", so "hoto" hangs past it
+     (worked out from the two font sizes, so it holds on every phone width) */
+  .hub-link.photo {
+    font-size: clamp(32px, 10vw, 42px);
+    margin-left: calc(4% + 2.84 * clamp(40px, 14vw, 56px) - 0.421 * clamp(32px, 10vw, 42px));
+  }
+  .hub-link.styling { font-size: clamp(40px, 14vw, 56px); margin-left: 4%; }
+  .hub-link.about { font-size: clamp(13px, 4vw, 16px); margin-left: 2%; }
+  .hub-link.touch { font-size: clamp(16px, 4.6vw, 20px); margin-left: 22%; margin-bottom: 9vh; }
+  /* pull about + get in touch up and closer together */
+  .hub-links .hub-link.about { margin-top: -8vh; }
+  .hub-links .hub-link.touch { margin-top: -4vh; margin-bottom: 18vh; }
+}
+
+/* ============================================
+   SELECTED WORK — playful credits list w/ cursor preview
+   ============================================ */
+.selected {
+  padding-top: clamp(56px, 9vw, 100px);
+  padding-bottom: clamp(24px, 4vw, 40px);
+}
+
+.selected-heading {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 800;
+  font-size: clamp(22px, 2.6vw, 30px);
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+}
+
+.selected-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.selected-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.selected-list a {
+  font-family: var(--sans);
+  font-size: clamp(19px, 2.6vw, 28px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.selected-list a .x {
+  color: var(--accent);
+  font-style: italic;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .selected-list a { transition: color 0.2s ease; }
+  .selected-list a:hover { color: var(--accent); }
+}
+
+.selected-list .tag {
+  flex: none;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--stone);
+}
+
+.cursor-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;              /* vertical photos */
+  pointer-events: none;
+  opacity: 0;
+  z-index: 60;
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
+}
+
+/* Landscape photos get a wider box so they read at a similar size */
+.cursor-preview.is-landscape { width: 300px; }
+
+/* Image keeps its natural aspect ratio — no cropping */
+.cursor-preview-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* YouTube hqdefault thumbnails are 4:3 with black bars baked in top and bottom.
+   Frame them at the video's real 16:9 so only the bars are trimmed. */
+.cursor-preview.is-letterboxed { aspect-ratio: 16 / 9; }
+.cursor-preview.is-letterboxed .cursor-preview-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.cursor-preview.show { opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-preview { display: none; }
+}
+
+/* ============================================
+   ABOUT STRIP
+   ============================================ */
+.about {
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(20px, 4vw, 32px);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.about-lead {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.45;
+  max-width: 34ch;
+  margin: 0;
+}
+
+.about-bio {
+  max-width: 62ch;
+}
+
+/* About page: the bio is the whole page */
+.about.about-only {
+  padding-top: clamp(64px, 12vh, 140px);
+  padding-bottom: clamp(56px, 10vh, 120px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.about-bio p {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.6;
+  margin: 0 0 1.1em;
+}
+
+.about-facts {
+  margin: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.about-facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  font-size: 14px;
+}
+
+.about-facts dt { color: var(--stone); }
+.about-facts dd { margin: 0; text-align: right; }
+
+@media (max-width: 780px) {
+  .about-grid { grid-template-columns: 1fr; }
+}

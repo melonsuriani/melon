@@ -1,0 +1,7 @@
+/* Grid-specific overrides now live in styles.css under .masonry —
+   this file is kept for any category-specific tweaks. */
+
+@media (max-width: 600px) {
+  .masonry { columns: 1; }
+  .project-cards { columns: 2 160px; }
+}

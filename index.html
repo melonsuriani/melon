@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if (location.hash === "#hub") { document.documentElement.classList.add("skip-cover"); }</script>
+<title>Melina Suriani — Photo, Design & Styling</title>
+<meta name="description" content="Melina Suriani is a photographer, designer, and stylist based in Los Angeles, CA. Selected work across all three.">
+<link rel="canonical" href="https://melinasuriani.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Melina Suriani — Photo, Design & Styling">
+<meta property="og:description" content="Photographer, designer, and stylist based in Los Angeles, CA.">
+<meta property="og:url" content="https://melinasuriani.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Melina Suriani — Photo, Design & Styling">
+<meta name="twitter:description" content="Photographer, designer, and stylist based in Los Angeles, CA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Arimo&family=Source+Sans+3&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+<section class="cover" id="cover">
+  <picture>
+    <source media="(max-width: 720px)" srcset="images/cover-mobile.jpg">
+    <img class="cover-media" src="images/cover.jpg" alt="Melina Suriani standing along the LA river at golden hour, wearing a black tank top with pink lace straps.">
+  </picture>
+  <div class="cover-overlay"></div>
+  <a class="cover-cta" href="#main" id="coverCta">the only way out is through <span class="cover-cta-cursor" aria-hidden="true"></span></a>
+</section>
+
+<div id="main">
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="#hub" class="wordmark">melina</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">menu</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="about.html">about</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hub wrap" id="hub" aria-label="Site navigation">
+    <div class="hub-links">
+      <a class="hub-link design" href="design.html">design</a>
+      <a class="hub-link photo" href="photo.html">photo</a>
+      <a class="hub-link styling" href="styling.html">styling</a>
+      <a class="hub-link about" href="about.html">about</a>
+      <a class="hub-link touch" href="contact.html">get in touch !</a>
+    </div>
+    <a class="scroll-hint" href="#selected">
+      <span class="scroll-hint-label">Selected work</span>
+      <span class="scroll-hint-arrow" aria-hidden="true">&darr;</span>
+    </a>
+  </section>
+
+  <section class="selected wrap" id="selected">
+    <h2 class="selected-heading">Selected work</h2>
+    <ul class="selected-list" id="selectedList">
+      <li><a href="styling-hermes-runway.html" data-label="Hermès — Runway Show" data-img="images/hermes/hermes-01.jpg">Hermès, Runway Show</a><span class="tag">styling</span></li>
+      <li><a href="photo-bonnie-clyde.html" data-label="Bonnie Clyde" data-img="images/bonnie-clyde/bonnieclyde-01.jpg">Bonnie Clyde</a><span class="tag">photo</span></li>
+      <li><a href="photo-maleah.html" data-label="Maleah" data-img="images/maleah/maleah-01.jpg">Maleah</a><span class="tag">photo</span></li>
+      <li><a href="design-the-job-collection.html" data-label="The Job — Collection Development" data-img="images/the-job-collection/tjc-01.jpg">The Job, Collection Development</a><span class="tag">design</span></li>
+      <li><a href="styling-baby-keem-highsnobiety.html" data-label="Baby Keem x Highsnobiety — Cover Story" data-img="images/baby-keem-highsnobiety/bk-01.jpg">Baby Keem <span class="x">x</span> Highsnobiety</a><span class="tag">styling</span></li>
+      <li><a href="styling-young-miko.html" data-label="Young Miko — Late Checkout Tour, EU" data-img="images/young-miko/young-miko-01.jpg">Young Miko, Late Checkout Tour EU</a><span class="tag">styling</span></li>
+      <li><a href="styling-mango-kaia-gerber.html" data-label="Craft Your Own Story — Mango ft. Kaia Gerber" data-img="https://img.youtube.com/vi/pgtYNs5vvsI/hqdefault.jpg" data-letterbox>Craft Your Own Story, Mango ft. Kaia Gerber</a><span class="tag">styling</span></li>
+      <li><a href="photo-audrey.html" data-label="Audrey" data-img="images/audrey/audrey-01.jpg">Audrey</a><span class="tag">photo</span></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <p class="footer-headline">Have a project in mind? <a href="contact.html">Get in touch</a> — <em>let's make something.</em></p>
+  </div>
+  <div class="wrap footer-meta">
+    <span>© <span id="year"></span> Melina Suriani</span>
+  </div>
+</footer>
+
+</div><!-- /#main -->
+
+<div class="cursor-preview" id="cursorPreview" aria-hidden="true">
+  <img class="cursor-preview-img" id="cursorPreviewImg" src="" alt="">
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // If the phone cover photo is missing, fall back to the laptop cover photo
+  var coverImg = document.querySelector(".cover-media");
+  if (coverImg) {
+    var useLaptopCover = function () {
+      var pic = coverImg.parentNode;
+      if (pic && pic.tagName === "PICTURE") {
+        pic.querySelectorAll("source").forEach(function (s) { s.remove(); });
+      }
+      if (coverImg.getAttribute("src") !== "images/cover.jpg" || coverImg.naturalWidth === 0) {
+        coverImg.removeEventListener("error", useLaptopCover);
+        coverImg.src = "images/cover.jpg?fallback";
+      }
+    };
+    coverImg.addEventListener("error", useLaptopCover);
+    if (coverImg.complete && coverImg.naturalWidth === 0 && /cover-mobile/.test(coverImg.currentSrc || "")) useLaptopCover();
+  }
+
+  var coverCta = document.getElementById("coverCta");
+  if (coverCta) {
+    coverCta.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.body.classList.add("entered");
+    });
+  }
+
+  var toggle = document.getElementById("navToggle");
+  var nav = document.getElementById("mainNav");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", function () {
+      var isOpen = nav.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      toggle.textContent = isOpen ? "close" : "menu";
+    });
+
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.textContent = "menu";
+      });
+    });
+  }
+
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  document.querySelectorAll(".masonry").forEach(function (gallery) {
+    var items = Array.prototype.slice.call(gallery.querySelectorAll(".masonry-item"))
+      .filter(function (el) { return el.tagName === "A" && el.querySelector("img"); });
+    if (!items.length) return;
+
+    // Build one lightbox for this gallery, appended to the body.
+    var lightbox = document.createElement("div");
+    lightbox.className = "lightbox";
+    lightbox.setAttribute("aria-hidden", "true");
+    lightbox.innerHTML =
+      '<button class="lightbox-close" aria-label="Close">&times;</button>' +
+      '<img class="lightbox-image" src="" alt="">' +
+      '<span class="lightbox-counter"></span>';
+    document.body.appendChild(lightbox);
+
+    var lbImg = lightbox.querySelector(".lightbox-image");
+    var lbCounter = lightbox.querySelector(".lightbox-counter");
+    var lbClose = lightbox.querySelector(".lightbox-close");
+    var idx = 0;
+
+    function show(i) {
+      idx = (i + items.length) % items.length;
+      var img = items[idx].querySelector("img");
+      lbImg.src = items[idx].getAttribute("href") || img.src;
+      lbImg.alt = img.alt || "";
+      lbCounter.textContent = (idx + 1) + " / " + items.length;
+    }
+
+    function open(i) {
+      show(i);
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function close() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    items.forEach(function (item, i) {
+      item.addEventListener("click", function (e) {
+        e.preventDefault();
+        open(i);
+      });
+    });
+
+    lbClose.addEventListener("click", close);
+
+    // Click the backdrop (outside the image) to close.
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox) close();
+    });
+
+    // Click the left/right half of the image to go prev/next (no visible arrows).
+    lbImg.addEventListener("click", function (e) {
+      var rect = lbImg.getBoundingClientRect();
+      var clickedLeft = (e.clientX - rect.left) < rect.width / 2;
+      if (items.length > 1) show(clickedLeft ? idx - 1 : idx + 1);
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (!lightbox.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") show(idx - 1);
+      if (e.key === "ArrowRight") show(idx + 1);
+    });
+
+    var startX = null;
+    lightbox.addEventListener("touchstart", function (e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    lightbox.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40 && items.length > 1) { show(dx > 0 ? idx - 1 : idx + 1); }
+      startX = null;
+    });
+  });
+
+  var list = document.getElementById("selectedList");
+  var preview = document.getElementById("cursorPreview");
+  var previewImg = document.getElementById("cursorPreviewImg");
+  var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (list && preview && previewImg && canHover) {
+    var raf = null;
+    var lastX = 0, lastY = 0;
+
+    function place() {
+      preview.style.transform = "translate(" + (lastX + 28) + "px, " + (lastY - preview.offsetHeight / 2) + "px)";
+      raf = null;
+    }
+
+    list.addEventListener("mousemove", function (e) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!raf) raf = requestAnimationFrame(place);
+    });
+
+    list.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("mouseenter", function () {
+        if (link.dataset.img) {
+          var letterboxed = "letterbox" in link.dataset;
+          preview.classList.toggle("is-letterboxed", letterboxed);
+          preview.classList.toggle("is-landscape", letterboxed);
+          previewImg.onload = function () {
+            if (!letterboxed) {
+              preview.classList.toggle("is-landscape", previewImg.naturalWidth > previewImg.naturalHeight);
+            }
+            place();
+          };
+          previewImg.alt = link.dataset.label || "";
+          previewImg.src = link.dataset.img;
+        }
+        preview.classList.add("show");
+      });
+      link.addEventListener("mouseleave", function () {
+        preview.classList.remove("show");
+      });
+    });
+  }
+
+  // Contact form: send in place (Netlify Forms) and show a thank-you, no page jump
+  var form = document.getElementById("contactForm");
+  if (form) {
+    var status = document.getElementById("contactStatus");
+    var button = form.querySelector(".contact-send");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      button.disabled = true;
+      status.classList.remove("is-error");
+      status.textContent = "Sending…";
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString()
+      }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        status.textContent = "Thank you — your message is on its way. I'll reply by email soon.";
+      }).catch(function () {
+        status.classList.add("is-error");
+        status.innerHTML = 'Sorry, that didn\'t send. Please email me at <a href="mailto:melinasuriani@gmail.com">melinasuriani@gmail.com</a>.';
+      }).then(function () { button.disabled = false; });
+    });
+  }
+});
