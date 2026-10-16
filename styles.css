@@ -770,17 +770,24 @@ a.page-kicker:focus-visible {
 /* Contact page: just one line with the email (opens a Gmail draft) */
 .contact.contact-only {
   max-width: var(--max);
-  padding-top: clamp(64px, 12vh, 140px);
-  padding-bottom: clamp(56px, 10vh, 120px);
+  min-height: calc(100vh - 73px - clamp(60px, 10vw, 120px) - 100px);
+  min-height: calc(100svh - 73px - clamp(60px, 10vw, 120px) - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 .contact-line {
-  font-family: var(--serif);
-  font-size: clamp(22px, 2.8vw, 34px);
-  line-height: 1.4;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--stone);
+  text-align: center;
   margin: 0;
   overflow-wrap: anywhere;
 }
-.contact-line a { text-decoration: underline; text-underline-offset: 0.15em; text-decoration-thickness: 1px; }
+.contact-line a { color: var(--ink); text-decoration: underline; text-underline-offset: 0.15em; }
 .contact-line a:hover, .contact-line a:focus-visible { color: var(--accent); }
 
 .footer-headline em { font-style: normal; }
