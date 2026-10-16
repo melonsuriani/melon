@@ -40,44 +40,15 @@
 
 <main>
 
-  <section class="contact wrap" id="get-in-touch">
-    <h1 class="contact-heading">Get in touch</h1>
-
-    <form class="contact-form" id="contactForm" name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="contact">
-      <p class="contact-hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-
-      <div class="contact-row">
-        <label class="contact-field">
-          <span>Name</span>
-          <input type="text" name="name" autocomplete="name" required>
-        </label>
-        <label class="contact-field">
-          <span>Email</span>
-          <input type="email" name="email" autocomplete="email" required>
-        </label>
-      </div>
-
-
-      <label class="contact-field">
-        <span>Message</span>
-        <textarea name="message" rows="6" required></textarea>
-      </label>
-
-      <button class="contact-send" type="submit">Send message</button>
-      <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
-    </form>
-
-    <p class="contact-alt">Or email me directly at <a href="mailto:melinasuriani@gmail.com">melinasuriani@gmail.com</a></p>
+  <section class="contact contact-only wrap" id="get-in-touch">
+    <h1 class="visually-hidden">Contact Melina Suriani</h1>
+    <p class="contact-line">email me directly at <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=melinasuriani@gmail.com" target="_blank" rel="noopener">melinasuriani@gmail.com</a></p>
   </section>
 
 </main>
 
 <footer class="site-footer" id="contact">
-  <div class="wrap">
-    <p class="footer-headline">Have a project in mind? <a href="/contact">Get in touch</a> — <em>let's make something.</em></p>
-  </div>
-  <div class="wrap footer-meta">
+  <div class="wrap footer-meta" style="padding-top: 32px;">
     <span>© <span id="year"></span> Melina Suriani</span>
   </div>
 </footer>
