@@ -46,11 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  document.querySelectorAll(".masonry").forEach(function (gallery) {
-    var items = Array.prototype.slice.call(gallery.querySelectorAll(".masonry-item"))
-      .filter(function (el) { return el.tagName === "A" && el.querySelector("img"); });
-    if (!items.length) return;
-
+  // Full-screen photo viewer. `photos` is a list of { src, alt }; returns open(index).
+  function makeLightbox(photos) {
     // Build one lightbox for this gallery, appended to the body.
     var lightbox = document.createElement("div");
     lightbox.className = "lightbox";
@@ -66,11 +63,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var lbClose = lightbox.querySelector(".lightbox-close");
     var idx = 0;
 
+    var items = photos;
+
     function show(i) {
       idx = (i + items.length) % items.length;
-      var img = items[idx].querySelector("img");
-      lbImg.src = items[idx].getAttribute("href") || img.src;
-      lbImg.alt = img.alt || "";
+      lbImg.src = items[idx].src;
+      lbImg.alt = items[idx].alt || "";
       lbCounter.textContent = (idx + 1) + " / " + items.length;
     }
 
@@ -86,13 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
       lightbox.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
     }
-
-    items.forEach(function (item, i) {
-      item.addEventListener("click", function (e) {
-        e.preventDefault();
-        open(i);
-      });
-    });
 
     lbClose.addEventListener("click", close);
 
@@ -125,6 +116,35 @@ document.addEventListener("DOMContentLoaded", function () {
       if (Math.abs(dx) > 40 && items.length > 1) { show(dx > 0 ? idx - 1 : idx + 1); }
       startX = null;
     });
+
+    return open;
+  }
+
+  // Photo grids: click any photo to open it full screen.
+  document.querySelectorAll(".masonry").forEach(function (gallery) {
+    var links = Array.prototype.slice.call(gallery.querySelectorAll(".masonry-item"))
+      .filter(function (el) { return el.tagName === "A" && el.querySelector("img"); });
+    if (!links.length) return;
+    var open = makeLightbox(links.map(function (a) {
+      var img = a.querySelector("img");
+      return { src: a.getAttribute("href") || img.src, alt: img.alt };
+    }));
+    links.forEach(function (a, i) {
+      a.addEventListener("click", function (e) { e.preventDefault(); open(i); });
+    });
+  });
+
+  // Section covers (e.g. Designs / Development / Final product): click a cover
+  // to open that section's photos full screen.
+  document.querySelectorAll(".section-card[data-gallery]").forEach(function (card) {
+    var list = document.getElementById(card.getAttribute("data-gallery"));
+    if (!list) return;
+    var photos = Array.prototype.map.call(list.querySelectorAll("a[href]"), function (a) {
+      return { src: a.getAttribute("href"), alt: a.getAttribute("data-alt") || "" };
+    });
+    if (!photos.length) return;
+    var open = makeLightbox(photos);
+    card.addEventListener("click", function () { open(0); });
   });
 
   var list = document.getElementById("selectedList");

@@ -796,6 +796,57 @@ a.page-kicker:focus-visible {
 .footer-headline a:hover { color: var(--accent); }
 
 
+/* Section covers: three covers side by side (Designs / Development / Final product).
+   Clicking a cover opens that section's photos full screen. */
+.section-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 32px);
+  padding-top: clamp(40px, 6vw, 64px);
+  padding-bottom: clamp(20px, 4vw, 40px);
+}
+.section-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.section-card-cover {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.section-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.section-card-name {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(18px, 1.8vw, 24px);
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+.section-card:hover .section-card-cover img,
+.section-card:focus-visible .section-card-cover img { transform: scale(1.03); }
+.section-card:hover .section-card-name,
+.section-card:focus-visible .section-card-name { color: var(--accent); }
+@media (max-width: 600px) {
+  .section-cards { grid-template-columns: 1fr; gap: 28px; }
+}
+
 /* Multi-section project pages (e.g. Designs / Development / Final product) */
 .project-section { padding-top: clamp(32px, 5vw, 56px); }
 .project-section + .project-section { border-top: 1px solid var(--line); margin-top: clamp(16px, 3vw, 32px); }
