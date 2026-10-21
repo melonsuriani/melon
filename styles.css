@@ -846,6 +846,43 @@ a.page-kicker:focus-visible {
 @media (max-width: 600px) {
   .section-cards { grid-template-columns: 1fr; gap: 28px; }
 }
+.section-cards { scroll-margin-top: 73px; }
+
+/* Phone-only "scroll down" arrow on project pages (matches the homepage's
+   bouncing arrow). Sits at the bottom of the screen and fades once you scroll. */
+.page-scroll-hint { display: none; }
+@media (max-width: 720px) {
+  .page-scroll-hint {
+    position: fixed;
+    left: 50%;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--stone);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1;
+    text-decoration: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .page-scroll-hint.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+.page-scroll-hint-arrow { display: block; animation: page-scroll-bounce 1.8s ease-in-out infinite; }
+@keyframes page-scroll-bounce {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-scroll-hint-arrow { animation: none; }
+}
 
 /* Multi-section project pages (e.g. Designs / Development / Final product) */
 .project-section { padding-top: clamp(32px, 5vw, 56px); }

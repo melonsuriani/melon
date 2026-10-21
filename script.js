@@ -134,6 +134,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Phone "scroll down" arrow: hide it once the visitor starts scrolling
+  // (or if the whole page already fits on screen).
+  var scrollHint = document.querySelector(".page-scroll-hint");
+  if (scrollHint) {
+    var updateHint = function () {
+      var atTop = window.scrollY < 40;
+      var hasMore = document.documentElement.scrollHeight - window.innerHeight > 80;
+      scrollHint.classList.toggle("is-hidden", !(atTop && hasMore));
+    };
+    window.addEventListener("scroll", updateHint, { passive: true });
+    window.addEventListener("resize", updateHint);
+    updateHint();
+  }
+
   // Section covers (e.g. Designs / Development / Final product): click a cover
   // to open that section's photos full screen.
   document.querySelectorAll(".section-card[data-gallery]").forEach(function (card) {
