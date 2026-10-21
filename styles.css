@@ -548,6 +548,7 @@ a.page-kicker:focus-visible {
   color: var(--ink);
   margin: 0;
 }
+.cv-lines .cv-joiner { font-weight: 400; }
 
 /* ============================================
    SECTION HEADING (labeled sub-sections within a project page)
