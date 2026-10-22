@@ -134,6 +134,47 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Contact email: on phones, tapping copies the address (laptops keep the Gmail draft link)
+  var emailLink = document.getElementById("contactEmail");
+  var copiedNote = document.getElementById("contactCopied");
+  var isPhone = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  if (emailLink && copiedNote && isPhone) {
+    var hideTimer = null;
+    var showCopied = function (text) {
+      copiedNote.textContent = text;
+      copiedNote.classList.add("show");
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () { copiedNote.classList.remove("show"); }, 2200);
+    };
+    var fallbackCopy = function (text) {
+      var box = document.createElement("textarea");
+      box.value = text;
+      box.setAttribute("readonly", "");
+      box.style.position = "fixed";
+      box.style.opacity = "0";
+      document.body.appendChild(box);
+      box.select();
+      box.setSelectionRange(0, text.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+      document.body.removeChild(box);
+      return ok;
+    };
+    emailLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      var address = emailLink.getAttribute("data-email");
+      var done = function () { showCopied("copied!"); };
+      var failed = function () {
+        if (fallbackCopy(address)) { done(); } else { window.location.href = "mailto:" + address; }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(address).then(done, failed);
+      } else {
+        failed();
+      }
+    });
+  }
+
   // Phone "scroll down" arrow: hide it once the visitor starts scrolling
   // (or if the whole page already fits on screen).
   var scrollHint = document.querySelector(".page-scroll-hint");

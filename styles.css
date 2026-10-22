@@ -790,6 +790,18 @@ a.page-kicker:focus-visible {
 }
 .contact-line a { color: var(--ink); text-decoration: underline; text-underline-offset: 0.15em; }
 .contact-line a:hover, .contact-line a:focus-visible { color: var(--accent); }
+.contact.contact-only { flex-direction: column; }
+.contact-copied {
+  margin: 8px 0 0;
+  min-height: 1.5em;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--stone);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.contact-copied.show { opacity: 1; }
 
 .footer-headline em { font-style: normal; }
 .footer-headline a { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; }

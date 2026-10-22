@@ -21,11 +21,13 @@ html.skip-cover .cover {
   display: none;
 }
 
-html.skip-cover body {
+html.skip-cover body,
+html.skip-cover body.has-cover:not(.entered) {
   overflow: auto;
 }
 
-body:not(.entered) {
+/* Only the homepage (which has the cover photo) locks scrolling until you enter */
+body.has-cover:not(.entered) {
   overflow: hidden;
 }
 
