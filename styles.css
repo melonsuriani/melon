@@ -486,6 +486,26 @@ a.page-kicker:focus-visible {
   }
 }
 
+/* Even grid variant of the project cards (Photo tab): every cover is the
+   same 3:2 shape and a tall cover ("tall") spans two rows, so there are no gaps.
+   Laptop: 3 across. Phone: 1 per row. */
+.project-cards.cards-grid {
+  columns: unset;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 28px);
+}
+.cards-grid .project-card { margin: 0; display: flex; flex-direction: column; }
+.cards-grid .project-card-cover img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.cards-grid .project-card.tall { grid-row: span 2; }
+.cards-grid .project-card.tall .project-card-cover { flex: 1; display: flex; flex-direction: column; }
+.cards-grid .project-card.tall .project-card-cover img { flex: 1 1 0; min-height: 0; height: 0; aspect-ratio: auto; }
+@media (max-width: 600px) {
+  .project-cards.cards-grid { grid-template-columns: 1fr; gap: 24px; }
+  .cards-grid .project-card.tall { grid-row: auto; }
+  .cards-grid .project-card.tall .project-card-cover img { flex: none; height: auto; }
+}
+
 /* ============================================
    CREATIVE VISION (design tab opener, mirrors the old site)
    ============================================ */
