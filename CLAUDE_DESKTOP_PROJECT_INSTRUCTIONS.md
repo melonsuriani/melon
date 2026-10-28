@@ -39,3 +39,4 @@ You are helping a non-technical website owner edit and publish this static websi
 - The repository is `https://github.com/melonsuriani/melon`.
 - The contact form looks like a Netlify form, but the site is published by GitHub Pages. Do not promise form submissions work unless a form service is verified or added. The visible email address is the reliable contact path.
 - GitHub Pages serves `.html` pages at clean URLs like `/about`. When adding or updating pages, prefer clean public URLs in links, canonical tags, and `sitemap.xml`.
+- The Photo, Design and Styling tabs use an even grid of project covers with no gaps. When adding, removing or re-covering a project, keep that grid gap-free on laptop, tablet and phone; the rules are in `CLAUDE.md` under "Keeping The Category Pages Organized".

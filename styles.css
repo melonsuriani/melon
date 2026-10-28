@@ -486,24 +486,34 @@ a.page-kicker:focus-visible {
   }
 }
 
-/* Even grid variant of the project cards (Photo tab): every cover is the
-   same 3:2 shape and a tall cover ("tall") spans two rows, so there are no gaps.
-   Laptop: 3 across. Phone: 1 per row. */
+/* Even grid for the category pages (Photo / Design / Styling).
+   Every cover is cropped to the same shape (--cell) so rows line up; a tall cover
+   (class "tall") spans two rows. Each page sets its own column counts so the
+   covers fill the grid with no gaps:
+     --cols    laptop columns        --cols-md  tablet columns (601-1000px)
+     --cols-sm phone columns         --cell     cover shape, e.g. 3 / 2 or 4 / 5
+   Pages whose phone layout is one column also add "phone-stack" so tall covers
+   show at their natural shape there. */
 .project-cards.cards-grid {
   columns: unset;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
+  grid-auto-flow: dense;
   gap: clamp(16px, 2.4vw, 28px);
 }
 .cards-grid .project-card { margin: 0; display: flex; flex-direction: column; }
-.cards-grid .project-card-cover img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.cards-grid .project-card-cover img { width: 100%; height: auto; aspect-ratio: var(--cell, 3 / 2); object-fit: cover; }
 .cards-grid .project-card.tall { grid-row: span 2; }
 .cards-grid .project-card.tall .project-card-cover { flex: 1; display: flex; flex-direction: column; }
 .cards-grid .project-card.tall .project-card-cover img { flex: 1 1 0; min-height: 0; height: 0; aspect-ratio: auto; }
+@media (max-width: 1000px) {
+  .project-cards.cards-grid { grid-template-columns: repeat(var(--cols-md, var(--cols, 3)), 1fr); }
+}
 @media (max-width: 600px) {
-  .project-cards.cards-grid { grid-template-columns: 1fr; gap: 24px; }
-  .cards-grid .project-card.tall { grid-row: auto; }
-  .cards-grid .project-card.tall .project-card-cover img { flex: none; height: auto; }
+  .project-cards.cards-grid { grid-template-columns: repeat(var(--cols-sm, 1), 1fr); gap: 16px; }
+  .cards-grid.phone-stack { gap: 24px; }
+  .cards-grid.phone-stack .project-card.tall { grid-row: auto; }
+  .cards-grid.phone-stack .project-card.tall .project-card-cover img { flex: none; height: auto; }
 }
 
 /* ============================================
