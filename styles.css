@@ -488,7 +488,8 @@ a.page-kicker:focus-visible {
 
 /* Even grid for the category pages (Photo / Design / Styling).
    Every cover is cropped to the same shape (--cell) so rows line up; a tall cover
-   (class "tall") spans two rows. Each page sets its own column counts so the
+   (class "tall") spans two rows and a wide cover (class "wide", shape --cell-wide)
+   spans two columns. Covers in a row with a wide cover stretch slightly to match it. Each page sets its own column counts so the
    covers fill the grid with no gaps:
      --cols    laptop columns        --cols-md  tablet columns (601-1000px)
      --cols-sm phone columns         --cell     cover shape, e.g. 3 / 2 or 4 / 5
@@ -502,7 +503,10 @@ a.page-kicker:focus-visible {
   gap: clamp(16px, 2.4vw, 28px);
 }
 .cards-grid .project-card { margin: 0; display: flex; flex-direction: column; }
-.cards-grid .project-card-cover img { width: 100%; height: auto; aspect-ratio: var(--cell, 3 / 2); object-fit: cover; }
+.cards-grid .project-card-cover { flex: 1; display: flex; flex-direction: column; }
+.cards-grid .project-card-cover img { flex: 1 0 auto; width: 100%; height: auto; aspect-ratio: var(--cell, 3 / 2); object-fit: cover; }
+.cards-grid .project-card.wide { grid-column: span 2; }
+.cards-grid .project-card.wide .project-card-cover img { aspect-ratio: var(--cell-wide, 3 / 1); }
 .cards-grid .project-card.tall { grid-row: span 2; }
 .cards-grid .project-card.tall .project-card-cover { flex: 1; display: flex; flex-direction: column; }
 .cards-grid .project-card.tall .project-card-cover img { flex: 1 1 0; min-height: 0; height: 0; aspect-ratio: auto; }

@@ -139,12 +139,13 @@ How the grid works (CSS is in `styles.css` under "Even grid for the category pag
 
 - Each tab's `<div class="project-cards cards-grid ...">` sets its own `--cols` (laptop), `--cols-md` (tablet), `--cols-sm` (phone) and `--cell` (cover shape).
 - Every cover is cropped to the `--cell` shape. A cover with class `tall` on its `<a class="project-card">` spans two rows (use it for portrait covers on tabs whose cells are landscape).
-- Currently: Photo = 3 / 1 / 1 columns (phone stacks), 3:2 covers, Alex is `tall`. Design = 4 / 2 / 2 columns, 3:2 covers, Young Miko and Trompe L'oeil Collection are `tall`. Styling = 5 / 2 / 2 columns, 4:5 covers, no `tall`.
+- A cover with class `wide` spans two columns and uses the `--cell-wide` shape (good for 16:9 video stills on tabs whose cells are portrait). For YouTube covers in a wide slot, use the `maxresdefault.jpg` still so no black bars show.
+- Currently: Photo = 3 / 1 / 1 columns (phone stacks), 3:2 covers, Alex is `tall`. Design = 4 / 2 / 2 columns, 3:2 covers, Young Miko and Trompe L'oeil Collection are `tall`. Styling = 4 / 2 / 2 columns, 4:5 covers, Sabrina Carpenter is `wide` (--cell-wide 8 / 5), 11 projects = 12 cells.
 
 When adding or changing a project:
 
-1. Count the grid cells: a normal cover is 1 cell, a `tall` cover is 2. For each screen size, the total must fill complete rows (a multiple of that size's column count). If it doesn't, adjust: change which covers are `tall`, change the column counts, or choose a different cover photo — then tell the owner in plain words what you changed.
-2. Every row that a `tall` cover spans must also contain at least one normal cover, or that row collapses. Order the covers so this holds on every screen size.
+1. Count the grid cells: a normal cover is 1 cell, a `tall` or `wide` cover is 2. For each screen size, the total must fill complete rows (a multiple of that size's column count). If it doesn't, adjust: change which covers are `tall`, change the column counts, or choose a different cover photo — then tell the owner in plain words what you changed.
+2. Every row that a `tall` cover spans must also contain at least one normal cover, or that row collapses (a `wide` cover may sit alone in a row). Order the covers so this holds on every screen size.
 3. Keep newest projects first unless the owner asks otherwise.
 4. Check the tab at laptop, tablet and phone widths (for example 1440, 820 and 390 px wide) and confirm every column starts and ends at the same height before offering to publish.
 
