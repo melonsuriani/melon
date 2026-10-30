@@ -43,6 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // YouTube covers: use the full-size still, but fall back to the standard one if
+  // the full-size still is missing (YouTube then sends a tiny 120px placeholder).
+  document.querySelectorAll("img[data-fallback]").forEach(function (img) {
+    var useFallback = function () {
+      var fb = img.getAttribute("data-fallback");
+      if (fb && img.getAttribute("src") !== fb) { img.src = fb; }
+    };
+    var check = function () { if (img.naturalWidth > 0 && img.naturalWidth <= 120) useFallback(); };
+    img.addEventListener("error", useFallback);
+    img.addEventListener("load", check);
+    if (img.complete) { if (img.naturalWidth === 0) useFallback(); else check(); }
+  });
+
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 

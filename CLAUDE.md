@@ -139,8 +139,8 @@ How the grid works (CSS is in `styles.css` under "Even grid for the category pag
 
 - Each tab's `<div class="project-cards cards-grid ...">` sets its own `--cols` (laptop), `--cols-md` (tablet), `--cols-sm` (phone) and `--cell` (cover shape).
 - Every cover is cropped to the `--cell` shape. A cover with class `tall` on its `<a class="project-card">` spans two rows (use it for portrait covers on tabs whose cells are landscape).
-- A cover with class `wide` spans two columns and uses the `--cell-wide` shape (good for 16:9 video stills on tabs whose cells are portrait). For YouTube covers in a wide slot, use the `maxresdefault.jpg` still so no black bars show.
-- Currently: Photo = 3 / 1 / 1 columns (phone stacks), 3:2 covers, Alex is `tall`. Design = 4 / 2 / 2 columns, 3:2 covers, Young Miko and Trompe L'oeil Collection are `tall`. Styling = 4 / 2 / 2 columns, 4:5 covers, Sabrina Carpenter is `wide` (--cell-wide 8 / 5), 11 projects = 12 cells.
+- A cover with class `wide` spans two columns and uses the `--cell-wide` shape (good for 16:9 video stills on tabs whose cells are portrait). For YouTube covers in a wide slot, use the `maxresdefault.jpg` still so no black bars show, with `data-fallback` set to the `hqdefault.jpg` still (script.js swaps to it if the full-size still is missing).
+- Currently: Photo = 3 / 1 / 1 columns (phone stacks), 3:2 covers, Alex is `tall`. Design = 4 / 2 / 2 columns, 3:2 covers, Young Miko and Trompe L'oeil Collection are `tall`. Styling = 4 / 2 / 2 columns, 4:5 covers, the three music videos (Wet Leg, Mango, Sabrina Carpenter) plus Hermès and Adidas are `wide` (--cell-wide 8 / 5), 11 projects = 16 cells. The owner wants video covers to stay horizontal (`wide`).
 
 When adding or changing a project:
 
